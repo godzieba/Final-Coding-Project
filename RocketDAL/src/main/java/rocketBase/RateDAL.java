@@ -29,10 +29,15 @@ public class RateDAL {
 			//			probably not a bad idea to sort the results...  Add an OrderBy
 			//			example can be found here:
 			//  		http://www.tutorialspoint.com/hibernate/hibernate_query_language.htm			
-			List lstRates = session.createQuery("FROM RateDomainModel").list();
+			List lstRates = session.createQuery("SELECT dInterestRate FROM RateDomainModel ORDER BY iMinCreditScore ASC").list();
+			ArrayList lstCreditScores = (ArrayList) session.createQuery("SELECT iMinCreditScore FROM RateDomainModel ORDER BY iMinCreditScore ASC").list();
 			for (Iterator iterator = lstRates.iterator(); iterator.hasNext();) {
-				RateDomainModel rte = (RateDomainModel) iterator.next();
+				RateDomainModel rte = new RateDomainModel();
+				rte.setdInterestRate((double) iterator.next());
 				alRates.add(rte);
+			}
+			for (int i = 0; i < alRates.size(); i++) {
+				alRates.get(i).setiMinCreditScore((int) lstCreditScores.get(i));
 			}
 			
 			tx.commit();

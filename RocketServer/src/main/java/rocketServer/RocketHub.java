@@ -2,6 +2,7 @@ package rocketServer;
 
 import java.io.IOException;
 
+import exceptions.RateException;
 import netgame.common.Hub;
 import rocketBase.RateBLL;
 import rocketData.LoanRequest;
@@ -34,6 +35,22 @@ public class RocketHub extends Hub {
 			//	
 			//	you should update lq, and then send lq back to the caller(s)
 			
+			try {
+				lq.setdRate(RateBLL.getRate(lq.getiCreditScore()));
+			} catch (RateException e) {
+				System.out.println("There are no interest rates available for your credit score.");
+				e.printStackTrace();
+			}
+			
+			lq.setdPayment(RateBLL.getPayment(lq.getdRate(), lq.getiTerm() * 12.0, lq.getdAmount() - lq.getiDownPayment(), 0, true));
+			
+			if ((lq.getIncome() * 0.28) < (lq.getIncome() * 0.36 - lq.getExpenses())) {
+				lq.setdHousingPayment(lq.getIncome() * 0.28);
+			}
+			else {
+				lq.setdHousingPayment(lq.getIncome() * 0.36 - lq.getExpenses());
+			}
+						
 			sendToAll(lq);
 		}
 	}

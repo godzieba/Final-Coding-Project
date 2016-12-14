@@ -54,17 +54,17 @@ public class MainApp extends Application {
 		
 		// START is executed by the Application framework after INIT
 		AnchorPane root = new AnchorPane();
-		Scene scene = new Scene(root, 1300, 500);
+		Scene scene = new Scene(root, 400, 400);
 
 		this.primaryStage = primaryStage;
 		
-		Screen screen = Screen.getPrimary();
-		Rectangle2D bounds = screen.getVisualBounds();
+		//Screen screen = Screen.getPrimary();
+		//Rectangle2D bounds = screen.getVisualBounds();
 
-		primaryStage.setX(bounds.getMinX());
-		primaryStage.setY(bounds.getMinY());
-		primaryStage.setWidth(bounds.getWidth());
-		primaryStage.setHeight(bounds.getHeight());
+		//primaryStage.setX(bounds.getMinX());
+		//primaryStage.setY(bounds.getMinY());
+		//primaryStage.setWidth(bounds.getWidth());
+		//primaryStage.setHeight(bounds.getHeight());
 		
 		this.primaryStage.setTitle("Rocket");
 		this.primaryStage.setScene(scene);
@@ -98,6 +98,7 @@ public class MainApp extends Application {
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(MainApp.class.getResource("view/Mortgage.fxml"));
 			AnchorPane RocketMain = (AnchorPane) loader.load();
+			
 
 			Scene scene = new Scene(RocketMain);
 
